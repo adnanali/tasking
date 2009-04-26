@@ -1,0 +1,20 @@
+<% title "Task Status" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @task_status.name %>
+</p>
+<p>
+  <strong>Bname:</strong>
+  <%=h @task_status.bname %>
+</p>
+<p>
+  <strong>Order:</strong>
+  <%=h @task_status.order %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_task_status_path(@task_status) %> |
+  <%= link_to "Destroy", @task_status, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", task_statuses_path %>
+</p>

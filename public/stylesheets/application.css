@@ -32,8 +32,13 @@ a {
   border: solid 1px #C66;
 }
 
-.fieldWithErrors {
-  display: inline;
+label.fieldWithErrors {
+  color: red;
+}
+
+select.fieldWithErrors, textarea.fieldWithErrors, input.fieldWithErrors {
+  background: #FBE3E4;
+  border-color: red;
 }
 
 #errorExplanation {

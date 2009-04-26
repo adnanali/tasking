@@ -6,8 +6,8 @@ class CreateTasks < ActiveRecord::Migration
       t.integer :creator_user_id
       t.integer :view_type_id
       t.integer :task_type_id
-      t.integer :priority
-      t.decimal :estimate
+      t.integer :priority, :default => 0, :null => false
+      t.decimal :estimate, :precision => 5, :scale => 2
       t.string :title
       t.text :description
       t.timestamps

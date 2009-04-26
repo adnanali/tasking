@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_filter :task_types
+
   def index
     @tasks = Task.all
   end
@@ -9,14 +11,13 @@ class TasksController < ApplicationController
   
   def new
     @task = Task.new
-    @task_types = TaskType.find(:all).map{ |t| [t.name, t.id] }
   end
   
   def create
     @task = Task.new(params[:task])
     if @task.save
       flash[:notice] = "Successfully created task."
-      redirect_to @task
+      redirect_to tasks_url
     else
       render :action => 'new'
     end
@@ -42,4 +43,9 @@ class TasksController < ApplicationController
     flash[:notice] = "Successfully destroyed task."
     redirect_to tasks_url
   end
+
+  protected
+    def task_types
+      @task_types = TaskType.find(:all).map{ |t| [t.name, t.id] }
+    end
 end

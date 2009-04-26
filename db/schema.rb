@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090426214737) do
+ActiveRecord::Schema.define(:version => 20090426221810) do
 
   create_table "task_types", :force => true do |t|
     t.string   "name"
@@ -23,10 +23,19 @@ ActiveRecord::Schema.define(:version => 20090426214737) do
     t.integer  "creator_user_id"
     t.integer  "view_type_id"
     t.integer  "task_type_id"
-    t.integer  "priority"
-    t.integer  "estimate",         :limit => 10, :precision => 10, :scale => 0
+    t.integer  "priority",                                       :default => 0, :null => false
+    t.decimal  "estimate",         :precision => 5, :scale => 2
     t.string   "title"
     t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "username"
+    t.string   "email"
+    t.string   "password_hash"
+    t.string   "password_salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

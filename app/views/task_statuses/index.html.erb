@@ -1,0 +1,21 @@
+<% title "Task Statuses" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Bname</th>
+    <th>Order</th>
+  </tr>
+  <% for task_status in @task_statuses %>
+    <tr>
+      <td><%=h task_status.name %></td>
+      <td><%=h task_status.bname %></td>
+      <td><%=h task_status.order %></td>
+      <td><%= link_to "Show", task_status %></td>
+      <td><%= link_to "Edit", edit_task_status_path(task_status) %></td>
+      <td><%= link_to "Destroy", task_status, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Task Status", new_task_status_path %></p>
