@@ -1,0 +1,44 @@
+<% title "Task" %>
+
+<p>
+  <strong>Vertical:</strong>
+  <%=h @task.vertical_id %>
+</p>
+<p>
+  <strong>Assigned User:</strong>
+  <%=h @task.assigned_user_id %>
+</p>
+<p>
+  <strong>Creator User:</strong>
+  <%=h @task.creator_user_id %>
+</p>
+<p>
+  <strong>View Type:</strong>
+  <%=h @task.view_type_id %>
+</p>
+<p>
+  <strong>Task Type:</strong>
+  <%=h @task.task_type_id %>
+</p>
+<p>
+  <strong>Priority:</strong>
+  <%=h @task.priority %>
+</p>
+<p>
+  <strong>Estimate:</strong>
+  <%=h @task.estimate %>
+</p>
+<p>
+  <strong>Title:</strong>
+  <%=h @task.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @task.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_task_path(@task) %> |
+  <%= link_to "Destroy", @task, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", tasks_path %>
+</p>

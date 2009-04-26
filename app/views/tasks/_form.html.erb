@@ -1,0 +1,53 @@
+<% form_for @task do |f| %>
+  <%= f.error_messages %>
+  <!--
+  <p>
+    <%= f.label :vertical_id %>
+    <%= f.text_field :vertical_id %>
+  </p>
+  <p>
+    <%= f.label :assigned_user_id %>
+    <%= f.text_field :assigned_user_id %>
+  </p>
+  <p>
+    <%= f.label :creator_user_id %>
+    <%= f.text_field :creator_user_id %>
+  </p>
+  <p>
+    <%= f.label :view_type_id %>
+    <%= f.text_field :view_type_id %>
+  </p>
+  -->
+  <p class="column span-4">
+    <%= f.label :task_type_id %>
+    <%= f.select :task_type_id, @task_types %>
+  </p>
+  <p class="column span-3">
+    <%= f.label :priority %>
+    <%= f.text_field :priority, :class => "text span-2" %>
+  </p>
+  <p class="column span-3">
+    <%= f.label :estimate %>
+    <%= f.text_field :estimate, :class => "text span-2" %>
+  </p>
+  <p class="column span-18 last">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </p>
+  <p class="column span-18 last">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </p>
+  <p class="clear"><%= f.submit "Submit" %></p>
+<% end %>
+
+<script type="text/javascript">
+  $("form > p input[type='text']").addClass("text");
+//   console.log ($(".select_width").css("width"));
+//   $(".select_width").each (function() {
+//     var me = $(this);
+//     var select = me.children("select");
+//     me.css("width", select.css("width"));
+//     me.css("margin-right", "30px");
+//   });
+</script>

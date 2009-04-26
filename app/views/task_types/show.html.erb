@@ -1,0 +1,12 @@
+<% title "Task Type" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @task_type.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_task_type_path(@task_type) %> |
+  <%= link_to "Destroy", @task_type, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", task_types_path %>
+</p>

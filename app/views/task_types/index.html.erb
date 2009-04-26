@@ -1,0 +1,17 @@
+<% title "Task Types" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% for task_type in @task_types %>
+    <tr>
+      <td><%=h task_type.name %></td>
+      <td><%= link_to "Show", task_type %></td>
+      <td><%= link_to "Edit", edit_task_type_path(task_type) %></td>
+      <td><%= link_to "Destroy", task_type, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Task Type", new_task_type_path %></p>

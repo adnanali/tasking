@@ -1,0 +1,21 @@
+one:
+  vertical_id: 1
+  assigned_user_id: 1
+  creator_user_id: 1
+  view_type_id: 1
+  task_type_id: 1
+  priority: 1
+  estimate: 9.99
+  title: MyString
+  description: MyText
+
+two:
+  vertical_id: 1
+  assigned_user_id: 1
+  creator_user_id: 1
+  view_type_id: 1
+  task_type_id: 1
+  priority: 1
+  estimate: 9.99
+  title: MyString
+  description: MyText

@@ -69,3 +69,18 @@ a {
   font-size: 12px;
   list-style: disc;
 }
+
+form > p {
+  margin: 0;
+  margin-bottom: 0.5em;
+  text-indent: 0em;
+}
+
+label {
+  display: block;
+}
+
+select {
+  margin: 0.5em 0.5em 0.5em 0;
+  padding: 3px;
+}
