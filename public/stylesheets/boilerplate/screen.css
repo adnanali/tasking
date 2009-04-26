@@ -1,0 +1,31 @@
+/* -------------------------------------------------------------- 
+  
+   Boilerplate Screen Styles
+   * Version:   0.5 (2007-11-19)
+   
+-------------------------------------------------------------- */
+
+@import "lib/reset.css";
+@import "lib/typography.css";
+@import "lib/forms.css";
+@import "lib/plugins.css";
+
+
+/* Site
+-------------------------------------------------------------- */
+  
+  /* Put your site styles here */
+#header {
+  width: 100%;
+  border-bottom: 3px solid black;
+  background: black;
+}
+
+#header_inner {
+  width: 950px;
+  margin: 0 auto;
+}
+
+#logo {
+  font-size: 4em;
+}

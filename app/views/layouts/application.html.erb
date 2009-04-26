@@ -3,11 +3,17 @@
 <html>
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
-    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'boilerplate/screen' %>
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="container">
+    <div id="header">
+      <div id="header_inner">
+        <a id="logo" href="<%= root_path  %>">Tasking</a>
+      </div>
+    </div>
+    <div id="body">
+      <div id="main">
       <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <%- end -%>
@@ -17,6 +23,10 @@
       <%- end -%>
       
       <%= yield %>
+      </div>
+      <div id="sidebar">
+        This will be the side bar
+      </div>
     </div>
   </body>
 </html>
