@@ -11,4 +11,18 @@ module ApplicationHelper
     end
     html_tag
   end
+
+  def mmarkdown(ptext)
+    text = ptext
+
+    # in very clear cases, let newlines become <br /> tags
+    text.gsub!(/(\A|^$\n)(^\w[^\n]*\n)(^\w[^\n]*$)+/m) do |x|
+      x.gsub(/^(.+)$/, "\\1 \n")
+    end
+
+    mtext = RDiscount.new(text)
+    text = mtext.to_html
+ 
+    text
+  end
 end

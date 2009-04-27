@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :task_types
+  before_filter :task_extras
 
   def index
     @tasks = Task.all
@@ -15,6 +15,7 @@ class TasksController < ApplicationController
   
   def create
     @task = Task.new(params[:task])
+    @task.task_status_id = TaskStatus.find(:first, :conditions => {:bname => 'open'}).id
     if @task.save
       flash[:notice] = "Successfully created task."
       redirect_to tasks_url
@@ -45,7 +46,8 @@ class TasksController < ApplicationController
   end
 
   protected
-    def task_types
+    def task_extras
       @task_types = TaskType.find(:all).map{ |t| [t.name, t.id] }
+      @task_statuses = TaskStatus.find(:all).map{ |t| [t.name, t.id] }
     end
 end

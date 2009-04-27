@@ -18,31 +18,72 @@
     <%= f.text_field :view_type_id %>
   </p>
   -->
+  <% unless controller.action_name == 'new' %>
+  <p class="column span-18 last">
+    <%= f.label :task_status_id %>
+    <span class="editable"><div><%=h @task.task_status.name %></div></span>
+    <%= f.select :task_status_id, @task_statuses, {}, { :class => "editbox" } %>
+  </p>
+  <% end %>
   <p class="column span-4">
     <%= f.label :task_type_id %>
-    <%= f.select :task_type_id, @task_types %>
+    <span class="editable"><div><%=h @task.task_type.name %></div></span>
+    <%= f.select :task_type_id, @task_types, {}, { :class => "editbox" } %>
   </p>
   <p class="column span-3">
     <%= f.label :priority %>
-    <%= f.text_field :priority, :class => "span-2" %>
+    <span class="editable"><div><%=h @task.priority %></div></span>
+    <%= f.text_field :priority, :class => "span-2 editbox" %>
   </p>
   <p class="column span-3">
     <%= f.label :estimate %>
-    <%= f.text_field :estimate, :class => "span-2" %>
+    <span class="editable"><div><%=h @task.estimate %></div></span>
+    <%= f.text_field :estimate, :class => "span-2 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :title %>
-    <%= f.text_field :title, :class => "span-9" %>
+    <span class="editable"><div><%=h @task.title %></div></span>
+    <%= f.text_field :title, :class => "span-14 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :description %>
-    <%= f.text_area :description, :class => "span-9" %>
+    <span class="editable"><%=mmarkdown @task.description %></span>
+    <%= f.text_area :description, :class => "span-14 editbox" %>
   </p>
   <p class="clear"><%= f.submit "Submit" %></p>
 <% end %>
 
 <script type="text/javascript">
   $("form > p input[type='text']").addClass("text");
+
+  <% unless controller.action_name == "new" %>
+    // $(".editable").after('<%= image_tag 'icons/sign_tick.png' %>');
+    $(".editbox").hide();
+    $(".editable").each(function() {
+      var me = $(this);   
+      var div = $(this).children("div");   
+      var editbox = me.siblings(".editbox");
+
+      if ($.trim(div.html()) == '') {
+        div.html("dblclick to edit");
+      }
+
+      me.bind("dblclick", function() {
+        me.hide();
+        editbox.after('<div class="options"><%= image_tag 'icons/sign_tick.png', :class => "accept" %> <%= image_tag 'icons/sign_remove.png', :class => "cancel" %></div>');
+        //editbox.next(".options").children(".accept").click();
+        editbox.next(".options").children(".cancel").click(function() {
+          me.show();
+          editbox.hide();
+          $(this).parent().remove(); 
+        });
+        editbox.show();
+        editbox.focus();
+      });
+    });
+  <% else %>
+    $(".editable").hide();
+  <% end %>
 //   console.log ($(".select_width").css("width"));
 //   $(".select_width").each (function() {
 //     var me = $(this);
