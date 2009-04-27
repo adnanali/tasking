@@ -39,26 +39,26 @@
     <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.priority %></div></span>
     <% end %>
-    <%= f.text_field :priority, :class => "span-2 editbox" %>
+    <%= f.text_field :priority, :class => "span-1 editbox" %>
   </p>
   <p class="column span-3">
     <%= f.label :estimate %>
     <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.estimate %></div></span>
     <% end %>
-    <%= f.text_field :estimate, :class => "span-2 editbox" %>
+    <%= f.text_field :estimate, :class => "span-1 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :title %>
     <% unless controller.action_name == "new" %>
-    <span class="editable"><div><%=h @task.title %></div></span>
+    <span class="clear editable"><div><%=h @task.title %></div></span>
     <% end %>
     <%= f.text_field :title, :class => "span-14 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :description %>
     <% unless controller.action_name == "new" %>
-    <span class="editable"><%=mmarkdown @task.description %></span>
+    <div class="clear editable"><%=mmarkdown @task.description %></div>
     <% end %>
     <%= f.text_area :description, :class => "span-14 editbox" %>
   </p>
@@ -71,23 +71,39 @@
   <% unless controller.action_name == "new" %>
     // $(".editable").after('<%= image_tag 'icons/sign_tick.png' %>');
     $(".editbox").hide();
+    $(".editable").hover(function(){
+      $(this).addClass("hover"); 
+    }, function(){
+      $(this).removeClass("hover"); 
+    });
     $(".editable").each(function() {
+
+      var cancel_click = function(me, editbox) {
+          me.removeClass("hover");
+          me.show();
+          editbox.hide();
+          editbox.next(".options").remove(); 
+      };
+
       var me = $(this);   
       var div = $(this).children("div");   
       var editbox = me.siblings(".editbox");
 
       if ($.trim(div.html()) == '') {
-        div.html("dblclick to edit");
+        div.html('<span class="click_to_edit">click to edit</span>');
       }
 
-      me.bind("dblclick", function() {
+      me.bind("click", function() {
         me.hide();
+        editbox.keyup(function(event) {
+          if (event.keyCode == 27) {
+            cancel_click(me, editbox);
+          }
+        });
         editbox.after('<div class="options"><%= image_tag 'icons/sign_tick.png', :class => "accept" %> <%= image_tag 'icons/sign_remove.png', :class => "cancel" %></div>');
         //editbox.next(".options").children(".accept").click();
         editbox.next(".options").children(".cancel").click(function() {
-          me.show();
-          editbox.hide();
-          $(this).parent().remove(); 
+          cancel_click(me, editbox);
         });
         editbox.show();
         editbox.focus();
