@@ -21,33 +21,45 @@
   <% unless controller.action_name == 'new' %>
   <p class="column span-18 last">
     <%= f.label :task_status_id %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.task_status.name %></div></span>
+    <% end %>
     <%= f.select :task_status_id, @task_statuses, {}, { :class => "editbox" } %>
   </p>
   <% end %>
   <p class="column span-4">
     <%= f.label :task_type_id %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.task_type.name %></div></span>
+    <% end %>
     <%= f.select :task_type_id, @task_types, {}, { :class => "editbox" } %>
   </p>
   <p class="column span-3">
     <%= f.label :priority %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.priority %></div></span>
+    <% end %>
     <%= f.text_field :priority, :class => "span-2 editbox" %>
   </p>
   <p class="column span-3">
     <%= f.label :estimate %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.estimate %></div></span>
+    <% end %>
     <%= f.text_field :estimate, :class => "span-2 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :title %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><div><%=h @task.title %></div></span>
+    <% end %>
     <%= f.text_field :title, :class => "span-14 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :description %>
+    <% unless controller.action_name == "new" %>
     <span class="editable"><%=mmarkdown @task.description %></span>
+    <% end %>
     <%= f.text_area :description, :class => "span-14 editbox" %>
   </p>
   <p class="clear"><%= f.submit "Submit" %></p>
