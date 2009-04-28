@@ -11,6 +11,7 @@ class TasksController < ApplicationController
   
   def new
     @task = Task.new
+    @action = "new"
   end
   
   def create
@@ -20,6 +21,7 @@ class TasksController < ApplicationController
       flash[:notice] = "Successfully created task."
       redirect_to tasks_url
     else
+      @action = "new"
       render :action => 'new'
     end
   end

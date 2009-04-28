@@ -18,10 +18,10 @@
     <%= f.text_field :view_type_id %>
   </p>
   -->
-  <% unless controller.action_name == 'new' %>
+  <% unless @action == 'new' %>
   <p class="column span-18 last">
     <%= f.label :task_status_id %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <span class="editable"><div><%=h @task.task_status.name %></div></span>
     <% end %>
     <%= f.select :task_status_id, @task_statuses, {}, { :class => "editbox" } %>
@@ -29,35 +29,35 @@
   <% end %>
   <p class="column span-4">
     <%= f.label :task_type_id %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <span class="editable"><div><%=h @task.task_type.name %></div></span>
     <% end %>
     <%= f.select :task_type_id, @task_types, {}, { :class => "editbox" } %>
   </p>
   <p class="column span-3">
     <%= f.label :priority %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <span class="editable"><div><%=h @task.priority %></div></span>
     <% end %>
     <%= f.text_field :priority, :class => "span-1 editbox" %>
   </p>
   <p class="column span-3">
     <%= f.label :estimate %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <span class="editable"><div><%=h @task.estimate %></div></span>
     <% end %>
     <%= f.text_field :estimate, :class => "span-1 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :title %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <span class="clear editable"><div><%=h @task.title %></div></span>
     <% end %>
     <%= f.text_field :title, :class => "span-14 editbox" %>
   </p>
   <p class="column span-18 last">
     <%= f.label :description %>
-    <% unless controller.action_name == "new" %>
+    <% unless @action == "new" %>
     <div class="clear editable"><div><%=mmarkdown @task.description %></div></div>
     <% end %>
     <%= f.text_area :description, :class => "span-14 editbox" %>
@@ -66,6 +66,10 @@
 <% end %>
 
 <script type="text/javascript">
+
+  <% unless @action == "new" %>
+    $(".editbox").hide();
+
       var cancel_click = function(me, editbox) {
           me.removeClass("hover");
           editbox.removeClass("open");
@@ -115,8 +119,6 @@
           div.html('<span class="click_to_edit">click to edit</span>');
         }
       };
-
-  <% unless controller.action_name == "new" %>
     $("form").submit(function() {
         // set all options to waiting
         $(".options").html('<%= image_tag 'waiting.gif' %>');
@@ -153,7 +155,7 @@
   <% end %>
   $("form > p input[type='text']").addClass("text");
 
-  <% unless controller.action_name == "new" %>
+  <% unless @action == "new" %>
     // $(".editable").after('<%= image_tag 'icons/sign_tick.png' %>');
     $(".editable").hover(function(){
       $(this).addClass("hover"); 
