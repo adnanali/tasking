@@ -100,11 +100,12 @@ input.text, textarea {
   margin-right: 5px;
   padding-right: 5px;
   padding-left: 2px;
+  width: 85%;
 }
 
 .editable.hover div {
   padding-left: 5px;
-  background: yellow;
+  background: #FFFFCC;
 }
 
 .click_to_edit {

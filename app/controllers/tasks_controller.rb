@@ -37,7 +37,7 @@ class TasksController < ApplicationController
           redirect_to @task
         end
         respond.js do
-          resp = []
+          resp = {}
           params[:task].each do |i|
             name = i[0]
             value = @task[i[0]]
@@ -48,7 +48,7 @@ class TasksController < ApplicationController
             elsif name == 'description'
               value = help.textilize(@task.description)
             end
-            resp << [name, value]
+            resp["task[#{name}]"] = value
           end
           render :json => {:result => true, :response =>  resp}
         end

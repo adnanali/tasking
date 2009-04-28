@@ -66,30 +66,16 @@
 <% end %>
 
 <script type="text/javascript">
-  <% unless controller.action_name == "new" %>
-    $("form").submit(function() {
-      return false;
-    });
-  <% end %>
-  $("form > p input[type='text']").addClass("text");
-
-  <% unless controller.action_name == "new" %>
-    // $(".editable").after('<%= image_tag 'icons/sign_tick.png' %>');
-    $(".editable").hover(function(){
-      $(this).addClass("hover"); 
-    }, function(){
-      $(this).removeClass("hover"); 
-    });
-    $(".editable").each(function() {
-
       var cancel_click = function(me, editbox) {
           me.removeClass("hover");
+          editbox.removeClass("open");
           me.show();
           editbox.hide();
           editbox.next(".options").remove(); 
       };
 
       var accept_click = function(me, editbox) {
+        editbox.next(".options").html('<%= image_tag 'waiting.gif' %>');
         var value = editbox.val();
         var action = editbox.parents("form").attr("action");
         var name = editbox.attr("name");
@@ -104,26 +90,84 @@
           dataType: "json",
           success: function(msg){
             if (msg.result) {
-              var updated_value = msg.response[0][1];
-              me.children("div").html(updated_value);
-              cte();
-              cancel_click(me, editbox);
+              update_editables(msg);
             } 
           }
         });
       };
 
-      var me = $(this);   
-      var div = $(this).children("div");   
-      var editbox = me.siblings(".editbox");
+      var update_editables = function(results) {
+        $.each(results.response, function(i, val) {
+          var name = i;
+          var value = val;
 
-      var cte = function() {
+          var editbox =  $("*[name='"+name+"'].editbox");
+          var editable = editbox.siblings(".editable");
+          var div = editable.children("div");
+          div.html(value);
+          cte(div);
+          cancel_click(editable, editbox);
+        });
+      };
+
+      var cte = function(div) {
         if ($.trim(div.html()) == '') {
           div.html('<span class="click_to_edit">click to edit</span>');
         }
       };
 
-      cte();
+  <% unless controller.action_name == "new" %>
+    $("form").submit(function() {
+        // set all options to waiting
+        $(".options").html('<%= image_tag 'waiting.gif' %>');
+      // get all the open fields
+        var action = $(this).attr("action");
+        var data = {};
+        data["_method"] = "PUT";
+        var send = false;
+        $(".editbox.open").each(function() {
+          var editbox = $(this);
+          var editable = editbox.siblings(".editable");
+          var value = $(this).val();
+          var name = $(this).attr("name");
+          data[name] = value;
+          send = true;
+        })
+
+        if (send) {
+          $.ajax({
+            type: "POST",
+            url: action,
+            data: data,
+            dataType: "json",
+            success: function(msg){
+              if (msg.result) {
+                update_editables(msg);
+              } 
+            }
+          });
+        };
+
+      return false;
+    });
+  <% end %>
+  $("form > p input[type='text']").addClass("text");
+
+  <% unless controller.action_name == "new" %>
+    // $(".editable").after('<%= image_tag 'icons/sign_tick.png' %>');
+    $(".editable").hover(function(){
+      $(this).addClass("hover"); 
+    }, function(){
+      $(this).removeClass("hover"); 
+    });
+    $(".editable").each(function() {
+
+      var me = $(this);   
+      var div = $(this).children("div");   
+      var editbox = me.siblings(".editbox");
+
+
+      cte(div);
 
 
       me.bind("click", function() {
@@ -141,6 +185,7 @@
         editbox.next(".options").children(".accept").click(function() {
           accept_click(me, editbox);
         });
+        editbox.addClass("open");
         editbox.show();
         editbox.focus();
       });
