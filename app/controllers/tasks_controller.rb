@@ -39,7 +39,16 @@ class TasksController < ApplicationController
         respond.js do
           resp = []
           params[:task].each do |i|
-            resp << [i[0], @task[i[0]]]
+            name = i[0]
+            value = @task[i[0]]
+            if name == 'task_type_id'
+              value = @task.task_type.name
+            elsif name == 'task_status_id'
+              value = @task.task_status.name
+            elsif name == 'description'
+              value = help.textilize(@task.description)
+            end
+            resp << [name, value]
           end
           render :json => {:result => true, :response =>  resp}
         end

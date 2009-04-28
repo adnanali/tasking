@@ -58,7 +58,7 @@
   <p class="column span-18 last">
     <%= f.label :description %>
     <% unless controller.action_name == "new" %>
-    <div class="clear editable"><%=mmarkdown @task.description %></div>
+    <div class="clear editable"><div><%=mmarkdown @task.description %></div></div>
     <% end %>
     <%= f.text_area :description, :class => "span-14 editbox" %>
   </p>
