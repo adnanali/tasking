@@ -1,5 +1,6 @@
 <% form_for @task do |f| %>
   <%= f.error_messages %>
+  <hr />
   <!--
   <p>
     <%= f.label :vertical_id %>
@@ -19,7 +20,7 @@
   </p>
   -->
   <% unless @action == 'new' %>
-  <p class="column span-18 last">
+  <p class="column span-6">
     <%= f.label :task_status_id %>
     <% unless @action == "new" %>
     <span class="editable"><div><%=h @task.task_status.name %></div></span>
@@ -48,6 +49,8 @@
     <% end %>
     <%= f.text_field :estimate, :class => "span-1 editbox" %>
   </p>
+  <br class="clear"/>
+  <hr />
   <p class="column span-18 last">
     <%= f.label :title %>
     <% unless @action == "new" %>
@@ -62,6 +65,7 @@
     <% end %>
     <%= f.text_area :description, :class => "span-14 editbox" %>
   </p>
+  <hr />
   <p class="clear"><%= f.submit "Submit" %></p>
 <% end %>
 

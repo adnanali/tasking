@@ -120,3 +120,12 @@ input.text, textarea {
   float: left;
   margin-top: 0.8em;
 }
+
+.span-1.editbox {
+  width: 35px !important;
+}
+
+hr {
+  background: #000000;
+  margin-top: 1em;
+}
