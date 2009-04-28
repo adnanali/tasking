@@ -31,10 +31,28 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update_attributes(params[:task])
-      flash[:notice] = "Successfully updated task."
-      redirect_to @task
+      respond_to do |respond|
+        respond.html do 
+          flash[:notice] = "Successfully updated task."
+          redirect_to @task
+        end
+        respond.js do
+          resp = []
+          params[:task].each do |i|
+            resp << [i[0], @task[i[0]]]
+          end
+          render :json => {:result => true, :response =>  resp}
+        end
+      end
     else
-      render :action => 'edit'
+      respond_to do |respond|
+        respond.html do 
+          render :action => 'edit'
+        end
+        respond.js do 
+          render :json => {:result => false, :response =>  ""}
+        end
+      end
     end
   end
   
