@@ -66,9 +66,11 @@
 <% end %>
 
 <script type="text/javascript">
-  $("form").submit(function() {
-    return false;
-  });
+  <% unless controller.action_name == "new" %>
+    $("form").submit(function() {
+      return false;
+    });
+  <% end %>
   $("form > p input[type='text']").addClass("text");
 
   <% unless controller.action_name == "new" %>
