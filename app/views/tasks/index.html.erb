@@ -2,20 +2,19 @@
 
 <table>
   <tr>
+    <th>Status</th>
     <th>Task Type</th>
     <th>Priority</th>
     <th>Estimate</th>
     <th>Title</th>
   </tr>
   <% for task in @tasks %>
-    <tr>
+    <tr class="row-<%= cycle("odd", "even") %> status_<%=task.task_status.bname%>">
+      <td><%=h task.task_status.name %></td>
       <td><%=h task.task_type.name %></td>
       <td><%=h task.priority %></td>
       <td><%=h task.estimate %></td>
-      <td><%=h task.title %></td>
-      <td><%= link_to "Show", task %></td>
-      <td><%= link_to "Edit", edit_task_path(task) %></td>
-      <td><%= link_to "Destroy", task, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to h(task.title), task %></td>
     </tr>
   <% end %>
 </table>
