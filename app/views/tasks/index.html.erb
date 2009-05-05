@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <th>Status</th>
-    <th>Task Type</th>
-    <th>Priority</th>
-    <th>Estimate</th>
-    <th>Title</th>
+    <th><%= sort_link 'Status', 'task_status_id' %></th>
+    <th><%= sort_link 'Task Type', 'task_type_id' %></th>
+    <th><%= sort_link 'Priority', 'priority' %></th>
+    <th><%= sort_link 'Estimate', 'estimate' %></th>
+    <th><%= sort_link 'Title', 'title' %></th>
   </tr>
   <% for task in @tasks %>
     <tr class="row-<%= cycle("odd", "even") %> status_<%=task.task_status.bname%>">

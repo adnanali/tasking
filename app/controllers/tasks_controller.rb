@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_filter :task_extras
 
   def index
-    @tasks = Task.all
+    @tasks = Task.find(:all, :order => sort_order('priority'))
   end
   
   def show

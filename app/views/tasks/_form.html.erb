@@ -83,7 +83,7 @@
       };
 
       var accept_click = function(me, editbox) {
-        editbox.next(".options").html('<%= image_tag 'waiting.gif' %>');
+        editbox.next(".options").html('<%= image_tag 'waiting.gif', :class => "waiting" %>');
         var value = editbox.val();
         var action = editbox.parents("form").attr("action");
         var name = editbox.attr("name");

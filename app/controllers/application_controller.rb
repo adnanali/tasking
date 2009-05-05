@@ -18,4 +18,9 @@ class ApplicationController < ActionController::Base
     include Singleton
     include ActionView::Helpers::TextHelper
   end
+
+  def sort_order(default)
+      "#{(params[:c] || default.to_s).gsub(/[\s;'\"]/,'')} #{params[:d] == 'up' ? 'ASC' : 'DESC'}"
+  end
+
 end
