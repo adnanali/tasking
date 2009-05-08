@@ -79,7 +79,10 @@
           editbox.removeClass("open");
           me.show();
           editbox.hide();
+          editbox.removeClass("fieldWithErrors");
+          editbox.siblings("label").removeClass("fieldWithErrors");
           editbox.next(".options").remove(); 
+          editbox.siblings(".errors").remove(); 
       };
 
       var accept_click = function(me, editbox) {
@@ -99,10 +102,24 @@
           success: function(msg){
             if (msg.result) {
               update_editables(msg);
-            } 
+            } else {
+              editbox.siblings(".errors").remove();
+              update_errors(msg);
+            }
           }
         });
       };
+
+      var addOptions = function(me, editbox) {
+        editbox.after('<div class="options"><%= image_tag 'icons/sign_tick.png', :class => "accept" %> <%= image_tag 'icons/sign_remove.png', :class => "cancel" %></div>');
+        //editbox.next(".options").children(".accept").click();
+        editbox.next(".options").children(".cancel").click(function() {
+          cancel_click(me, editbox);
+        });
+        editbox.next(".options").children(".accept").click(function() {
+          accept_click(me, editbox);
+        });
+      }
 
       var update_editables = function(results) {
         $.each(results.response, function(i, val) {
@@ -122,6 +139,30 @@
         if ($.trim(div.html()) == '') {
           div.html('<span class="click_to_edit">click to edit</span>');
         }
+      };
+
+      var update_errors = function(results) {
+        $.each(results.errors, function(i, val) {
+          var obj = i;
+          $.each(val, function(k, value) {
+            var field_name = value[0];
+            var error_msg = value[1];
+
+            var editbox = $("#" + obj + "_" + field_name);
+            var editable = editbox.siblings(".editable");
+            editbox.addClass("fieldWithErrors");
+            editbox.siblings("label").addClass("fieldWithErrors");
+            var errors = editbox.siblings(".errors");
+            if (! errors.length) {
+              editbox.siblings("label").after("<div class=\"errors\"><ul></ul></div>");
+              errors = editbox.siblings(".errors");
+            }
+            errors.children("ul").append("<li>"+ error_msg  +"</li>");
+            console.log(errors);
+            editbox.next(".options").remove(); 
+            addOptions(editable, editbox);
+          });
+        });
       };
     $("form").submit(function() {
         // set all options to waiting
@@ -149,7 +190,18 @@
             success: function(msg){
               if (msg.result) {
                 update_editables(msg);
-              } 
+              } else {
+                // remove all errors
+                // remove all options
+                $(".editbox.open").each(function() {
+                  var editbox = $(this);
+                  editbox.siblings(".options").remove();
+                  editbox.siblings(".errors").remove();
+                  var editable = editbox.siblings(".editable");
+                  addOptions(editable, editbox);
+                });
+                update_errors(msg);
+              }
             }
           });
         };
@@ -183,14 +235,7 @@
             cancel_click(me, editbox);
           }
         });
-        editbox.after('<div class="options"><%= image_tag 'icons/sign_tick.png', :class => "accept" %> <%= image_tag 'icons/sign_remove.png', :class => "cancel" %></div>');
-        //editbox.next(".options").children(".accept").click();
-        editbox.next(".options").children(".cancel").click(function() {
-          cancel_click(me, editbox);
-        });
-        editbox.next(".options").children(".accept").click(function() {
-          accept_click(me, editbox);
-        });
+        addOptions(me, editbox);
         editbox.addClass("open");
         editbox.show();
         editbox.focus();

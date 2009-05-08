@@ -61,7 +61,8 @@ class TasksController < ApplicationController
           render :action => 'edit'
         end
         respond.js do 
-          render :json => {:result => false, :response =>  ""}
+          logger.debug params[:task].keys
+          render :json => {:result => false, :errors =>  { :task => @task.errors } }
         end
       end
     end
